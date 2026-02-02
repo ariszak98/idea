@@ -1,0 +1,90 @@
+1. composer create-project laravel/laravel .
+    Creates a new laravel project on the current directory
+
+2. php artisan serve (--port=8001)
+    starts a new server on "localhost:(8000)" for the current laravel project
+
+3. Git Commands
+
+    1. git add .
+        Tells Git which files you want to "save" to next snapshot. "." means all of them
+
+    2. git commit -m "your message"
+        Creates a snapshot of the project at the moment
+
+    3. git push
+        Sends saved commits to Github
+
+4. php artisan db:show
+    Displays info about the current DB status
+
+5. php artisan migrate:refresh
+    Reset and re-run all migrations
+
+6. php artisan migrate:rollback
+    Rollback the latest database migrations
+
+7. php artisan make:migration
+    Creates a new migration
+
+8. php artisan migrate:fresh
+    Drop all tables and re-run all migrations
+
+9. php artisan tinker
+    Starts a "test PHP" session on terminal. 
+
+10. php artisan make:factory factory_name (-m corresponding model name)
+    Creates a Factory with the given name
+
+11. php artisan vendor:publish
+    Takes all Views from vendors and copies them to our own View file under "resources/views/vendor"
+
+12. php artisan db:seed
+    Seed the Database with records
+
+13. php artisan migrate:fresh --seed
+    Does a migrate:fresh and then Seeds the Database
+
+14. php artisan make:seeder <seeder_name>
+    Creates a new seeder
+
+15. php artisan db:seed --class=seeder_name
+    Seeds the Database using only the specified seeder
+
+16. php artisan route:list
+    It lists all available Routes
+
+17. php artisan route:list --except-vendor
+    It lists all available Routes except those from vendors
+
+18. composer require laravel/breeze --dev
+Installs Laravel Breeze on the current directory
+
+19. php artisan breeze:install
+Installs the Stack Blade + Alpine
+
+20. npm install && npm run dev
+Installing JS Dependancies && firing up the node server
+
+21. php artisan make:policy <policy_name>
+    Creates a Policy with the given name
+
+22. php artisan make:mail <mail_name>
+    Creates a new Mailable with the given name
+
+23. php artisan queue:work
+    Starts processing Jobs on the Queue as a Daemon
+
+24. php artisan make:job <job_name>
+    Creates a new Job class
+
+25. rm public/hot
+    Removes the "public/hot" file that is created after a "npm run dev" in order to run "npm run build"
+
+26. php artisan make:test <test_name>
+    Creates a test
+
+27. php artisan storage:link
+    Create the symbolic links configured for the application
+
+28. 
