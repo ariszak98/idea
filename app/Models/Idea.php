@@ -23,7 +23,7 @@ class Idea extends Model
     ];
 
     protected $attributes = [
-        'status' => IdeaStatus::PENDING
+        'status' => IdeaStatus::PENDING,
     ];
 
     public function user(): BelongsTo
@@ -33,6 +33,6 @@ class Idea extends Model
 
     public function steps(): hasMany
     {
-                return $this->hasMany(Step::class);
+        return $this->hasMany(Step::class);
     }
 }

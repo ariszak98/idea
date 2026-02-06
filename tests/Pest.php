@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-uses(Tests\TestCase::class)->in('Feature', 'Unit');
-
+uses(TestCase::class)->in('Feature', 'Unit');
 
 pest()
     ->use(RefreshDatabase::class)
