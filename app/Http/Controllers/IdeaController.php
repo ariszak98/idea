@@ -8,7 +8,6 @@ use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 
 class IdeaController extends Controller
 {

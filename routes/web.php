@@ -6,7 +6,7 @@ use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/ideas');
-//Route::get('/', function () {return view('welcome');});
+// Route::get('/', function () {return view('welcome');});
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create']);
@@ -20,4 +20,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->name('idea.show');
     Route::post('/logout', [SessionsController::class, 'destroy']);
 });
-
