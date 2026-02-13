@@ -7,15 +7,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class IdeaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $status = request('status');
 
@@ -49,9 +51,9 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea)
+    public function show(Idea $idea): View
     {
-        return view('idea.show');
+        return view('idea.show', ['idea' => $idea]);
     }
 
     /**
@@ -73,8 +75,10 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea): void
+    public function destroy(Idea $idea): RedirectResponse
     {
-        //
+        // authorize that this is allowed
+        $idea->delete();
+        return to_route('idea.index');
     }
 }
