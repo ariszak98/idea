@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
-use App\IdeaStatus;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,26 +21,12 @@ class IdeaController extends Controller
 
         $ideas = Auth::user()
             ->ideas()
-            ->when($status && $status !== 'all',
-                    fn ($query) => $query->where('status', $status)
-            )
+            ->when($status && $status !== 'all', fn ($query) => $query->where('status', $status))
             ->get();
-
-        $counts = Auth::user()->ideas()
-            ->selectRaw('status, count(*) as count')
-            ->groupBy('status')
-            ->pluck('count', 'status');
-
-        $statusCounts = collect(IdeaStatus::cases())
-            ->mapWithKeys(fn ($status) => [
-                $status->value => $counts->get($status->value, 0)
-            ])
-            ->put('all', Auth::user()->ideas()->count());
-
 
         return view('idea.index',
             ['ideas' => $ideas,
-             'statusCounts' => $statusCounts
+                'statusCounts' => Idea::statusCounts(Auth::user()),
             ]);
     }
 
