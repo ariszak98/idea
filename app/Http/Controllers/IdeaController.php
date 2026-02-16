@@ -79,6 +79,7 @@ class IdeaController extends Controller
     {
         // authorize that this is allowed
         $idea->delete();
+
         return to_route('idea.index');
     }
 }
