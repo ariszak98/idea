@@ -59,7 +59,29 @@
 
         <!-- Create Idea Modal -->
         <x-modal name="create-idea" title="Create New Idea">
-            Slot content here.
+            <form action="{{ route('idea.store') }}" method="POST">
+                @csrf
+
+                <div class="space-y-6">
+                    <x-form.field
+                        label="Title"
+                        name="title"
+                        placeholder="Enter a title for your idea"
+                        autofocus
+                    />
+
+                    <x-form.field
+                        label="Description"
+                        name="description"
+                        type="textarea"
+                        placeholder="Describe your idea..."
+                    />
+
+
+                </div>
+
+
+            </form>
         </x-modal>
 
     </div>

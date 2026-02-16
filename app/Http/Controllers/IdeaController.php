@@ -24,6 +24,7 @@ class IdeaController extends Controller
         $ideas = Auth::user()
             ->ideas()
             ->when($status && $status !== 'all', fn ($query) => $query->where('status', $status))
+            ->latest()
             ->get();
 
         return view('idea.index',
@@ -45,7 +46,7 @@ class IdeaController extends Controller
      */
     public function store(StoreIdeaRequest $request): void
     {
-        //
+        dd($request->all());
     }
 
     /**

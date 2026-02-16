@@ -23,11 +23,15 @@
     tabindex="-1"
 
 >
-    <x-card @click.away="show = false">
-        <div>
+    <x-card @click.away="show = false" class="shadow-xl max-w-2xl w-full max-h-[80dvh] overflow-auto">
+        <div class="flex justify-between items-center">
             <h2 id="modal-{{ $name }}-title" class="text-xl font-bold">{{ $title }}</h2>
+
+            <button type="button" aria-label="Close Modal" @click="show = false" class="hover:font-bold text-2xl">
+                x
+            </button>
         </div>
-        <div>
+        <div class="mt-4">
             {{ $slot }}
         </div>
     </x-card>
