@@ -59,7 +59,7 @@
 
         <!-- Create Idea Modal -->
         <x-modal name="create-idea" title="Create New Idea">
-            <form action="{{ route('idea.store') }}" method="POST">
+            <form x-data="{status: 'pending'}" action="{{ route('idea.store') }}" method="POST">
                 @csrf
 
                 <div class="space-y-6">
@@ -68,7 +68,29 @@
                         name="title"
                         placeholder="Enter a title for your idea"
                         autofocus
+                        required
                     />
+
+                    <div class="space-y-2">
+                        <label for="status" class="label">Status</label>
+
+                        <div class="flex gap-x-3">
+                            @foreach(App\IdeaStatus::cases() as $status)
+                                <button
+                                    type="button"
+                                    @click="status = @js($status->value)"
+                                    class="btn flex-1 h-10"
+                                    :class="status === @js($status->value) ? '' : 'btn-outlined'">
+                                    {{ $status->label() }}
+                                </button>
+                            @endforeach
+
+                            <input type="hidden" name="status" :value="status">
+                        </div>
+
+                        <x-form.error name="status" />
+
+                    </div>
 
                     <x-form.field
                         label="Description"
@@ -78,7 +100,14 @@
                     />
 
 
+                    <div class="flex justify-end gap-x-5">
+                        <button @click="$dispatch('close-modal')" type="button">Cancel</button>
+                        <button type="submit" class="btn">Create</button>
+                    </div>
+
                 </div>
+
+
 
 
             </form>
