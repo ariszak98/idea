@@ -8,6 +8,7 @@
             <p class="text-muted-foreground text-sm mt-2">Capture your thoughts. Make a plan. </p>
 
             <x-card
+                data-test="create-idea-button"
                 x-data
                 @click="$dispatch('open-modal', 'create-idea')"
                 is="button"
@@ -77,6 +78,7 @@
                         <div class="flex gap-x-3">
                             @foreach(App\IdeaStatus::cases() as $status)
                                 <button
+                                    data-test="button-status-{{ $status->value }}"
                                     type="button"
                                     @click="status = @js($status->value)"
                                     class="btn flex-1 h-10"
