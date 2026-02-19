@@ -60,7 +60,14 @@
 
         <!-- Create Idea Modal -->
         <x-modal name="create-idea" title="Create New Idea">
-            <form x-data="{status: 'pending'}" action="{{ route('idea.store') }}" method="POST">
+            <form
+                x-data="{
+                    status: 'pending',
+                    newLink: '',
+                    links: [],
+                }"
+                action="{{ route('idea.store') }}"
+                method="POST">
                 @csrf
 
                 <div class="space-y-6">
@@ -100,6 +107,53 @@
                         type="textarea"
                         placeholder="Describe your idea..."
                     />
+
+                    <div>
+                        <fieldset class="space-y-3">
+
+                            <legend class="label">Links</legend>
+
+                            <template x-for="(link, index) in links">
+                                <div class="flex items-center gap-x-2">
+                                    <input name="links[]" x-model="link" class="input">
+
+                                    <button
+                                        @click="links.splice(index, 1)"
+                                        type="button"
+                                        class="text-md font-bold hover:text-red-800 focus:outline-none text-red-800/80">
+                                        <span class="text-md font-bold">x</span>
+                                    </button>
+
+
+                                </div>
+                            </template>
+
+                            <div class="flex gap-x-2 items-center">
+
+                                <input
+                                    x-model="newLink"
+                                    type="url"
+                                    id="new-link"
+                                    placeholder="https://example.com"
+                                    autocomplete="url"
+                                    class="input flex-1 h-11"
+                                    spellcheck="false"
+                                >
+
+                                <button
+                                    @click="links.push(newLink.trim()); newLink= '';"
+                                    type="button"
+                                    class="h-11 w-11 flex items-center justify-center"
+                                    :disabled="!newLink">
+                                    <span class="text-4xl leading-none">+</span>
+                                </button>
+
+                            </div>
+
+
+
+                        </fieldset>
+                    </div>
 
 
                     <div class="flex justify-end gap-x-5">
