@@ -39,6 +39,14 @@
 
                 @forelse($ideas as $idea)
                     <x-card href="{{ route('idea.show', $idea) }}">
+
+                        @if($idea->image_path)
+                            <div class="mb-4 -mx-4 -mt-4 rounded-t-lg overflow-hidden">
+                                <img src="{{ asset('storage/' . $idea->image_path) }}" alt="" class="w-full h-auto object-cover">
+                            </div>
+                        @endif
+
+
                         <h3 class="text-foreground text-lg">{{ $idea->title }}</h3>
                         <div class="mt-2">
                             <x-idea.status-label status="{{ $idea->status }}">
@@ -62,12 +70,29 @@
         <x-modal name="create-idea" title="Create New Idea">
             <form
                 x-data="{
-                    status: 'pending',
-                    newLink: '',
-                    links: [],
-                }"
+                        status: 'pending',
+                        newLink: '',
+                        links: [],
+                        submit() {
+                          // if the user typed a link but didn't press +
+                          const v = this.newLink.trim();
+                          if (v) {
+                            this.links.push(v);
+                            this.newLink = '';
+                          }
+
+                          // remove empties
+                          this.links = this.links.map(l => l.trim()).filter(Boolean);
+
+                          // wait for DOM inputs (x-for) to render, then submit
+                          this.$nextTick(() => this.$el.submit());
+                        }
+                      }"
+                @submit.prevent="submit()"
                 action="{{ route('idea.store') }}"
-                method="POST">
+                method="POST"
+                enctype="multipart/form-data"
+            >
                 @csrf
 
                 <div class="space-y-6">
@@ -108,14 +133,19 @@
                         placeholder="Describe your idea..."
                     />
 
+                    <div class="space-y-2">
+                        <label for="image" class="label">Featured Image</label>
+                        <input type="file" name="image" id="image" accept="image/*" />
+                    </div>
+
                     <div>
                         <fieldset class="space-y-3">
 
                             <legend class="label">Links</legend>
 
-                            <template x-for="(link, index) in links">
+                            <template x-for="(link, index) in links" :key="index">
                                 <div class="flex items-center gap-x-2">
-                                    <input name="links[]" x-model="link" class="input">
+                                    <input name="links[]" x-model="links[index]" class="input">
 
                                     <button
                                         @click="links.splice(index, 1)"
@@ -123,8 +153,6 @@
                                         class="text-md font-bold hover:text-red-800 focus:outline-none text-red-800/80">
                                         <span class="text-md font-bold">x</span>
                                     </button>
-
-
                                 </div>
                             </template>
 
